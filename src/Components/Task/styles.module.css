@@ -1,0 +1,17 @@
+.task {
+  background-color: darkblue;
+  width: 150px;
+  height: 70px;
+  margin: 25px;
+  color: white;
+}
+.task p {
+  padding: 10px;
+  margin: 0;
+}
+
+.task button {
+  margin-left: 160px;
+  background-color: red;
+  color: white;
+}
