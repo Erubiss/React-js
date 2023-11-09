@@ -10,7 +10,7 @@ function Deletemodal({
 }) {
   let newTask;
   if (checkedTasks?.size === 1) {
-    newTask = tasks.find((task) => checkedTasks.has(task.id));
+    newTask = tasks.find((task) => checkedTasks.has(task._id));
   }
   return (
     <Modal show={isOpenDeleteModal} onHide={() => onHide("isOpenDeleteModal")}>

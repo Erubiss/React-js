@@ -1,233 +1,197 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AddTask from "./AddTask/AddTask";
 import Task from "./Task/Task";
-import Deletemodal from "./DeleteModal/deleteModal";
+import DeleteModal from "./deleteModal/deleteModal";
 import Styles from "./styles.module.css";
-import { idGeneretor } from "../helpers/idGeneretor";
 import Button from "react-bootstrap/Button";
+import {toast, } from "react-toastify";
 
-class ToDo extends React.Component {
-  state = {
-    tasks: [
-      { title: "Task1", description: "description", id: idGeneretor() },
-      { title: "Task2", description: "description", id: idGeneretor() },
-      { title: "Task3", description: "description", id: idGeneretor() },
-    ],
-    inputValue: {},
-    checkedTasks: new Set(),
-    isOpenAddModal: false,
-    isOpenDeleteModal: false,
-    editTask: {},
-  };
+import {
+  createTaskRequest,
+  getTaskRequest,
+  deleteTaskRequest,
+} from "../service/requests";
 
-  inputOnChange = (e) => {
-    const { inputValue } = this.state;
+const ToDo = ({ addNotification }) => {
+  let [tasks, setTasks] = useState([]);
+  let [inputValue, setInputValue] = useState({});
+  let [checkedTasks, setCheckedTasks] = useState(new Set());
+  let [isOpenAddModal, setIsOpenAddModal] = useState(false);
+  let [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  let [editTask, setEditTask] = useState({});
+  const inputOnChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     if (!value) {
       delete inputValue[name];
-      this.setState({
-        ...this.state,
-        inputValue,
-      });
+      setInputValue(inputValue);
     } else {
-      this.setState({
-        ...this.state,
-        inputValue: {
-          ...this.state.inputValue,
-          [name]: value,
-        },
+      setInputValue({
+        ...inputValue,
+        [name]: value,
       });
     }
   };
 
-  submit = (editTask) => {
+  const submit = async (editTask) => {
     if (editTask) {
-      const { tasks } = this.state;
       tasks.forEach((task) => {
-        if (task.id === editTask.id) {
+        if (task._id === editTask._id) {
           task.title = editTask.title;
           task.description = editTask.description;
         }
       });
-      this.setState({
-        ...this.state,
-        tasks,
-        isOpenAddModal: false,
-      });
+      setTasks(tasks);
+      setIsOpenAddModal(false);
+      setEditTask({});
     } else {
-      const { inputValue } = this.state;
       if (Object.keys(inputValue).length !== 2) return;
-      const tasks = this.state.tasks;
-
       const obj = {};
       Object.keys(inputValue).forEach((name) => {
-        console.log(inputValue[name]);
         obj[name] = inputValue[name];
-        obj.id = idGeneretor();
       });
-
       if (!obj.title && !obj.description) return;
-      tasks.push(obj);
-
-      this.setState({
-        ...this.state,
-        inputValue: {},
-        tasks,
-        isOpenAddModal: false,
-      });
+      const newTask = await createTaskRequest(obj, addNotification);
+      if (!newTask) return;
+      setInputValue({});
+      tasks.push(newTask);
+      setTasks(tasks);
+      setIsOpenAddModal(false);
     }
   };
 
-  handleDeleteTask = (id) => {
-    const checkedTasks = new Set();
-    checkedTasks.add(id);
-    this.setState({
-      ...this.state,
-      isOpenDeleteModal: true,
-      checkedTasks,
-    });
+  const handleDeleteTask = (_id) => {
+    checkedTasks.add(_id);
+    setCheckedTasks(checkedTasks);
+    setIsOpenDeleteModal(true);
   };
 
-  handleOnChange = (id) => {
-    const { checkedTasks } = this.state;
-    if (checkedTasks.has(id)) {
-      checkedTasks.delete(id);
+  const handleOnChange = (_id) => {
+    if (checkedTasks.has(_id)) {
+      checkedTasks.delete(_id);
     } else {
-      checkedTasks.add(id);
+      checkedTasks.add(_id);
     }
-    this.setState({
-      ...this.state,
-      checkedTasks,
-    });
+    setCheckedTasks(new Set(checkedTasks));
   };
-  handleDeleteAllTasks = () => {
-    let { tasks, checkedTasks } = this.state;
-    checkedTasks = Array.from(checkedTasks);
-    tasks = checkedTasks.reduce(
-      (acc, checkedTask) => acc.filter((task) => task.id !== checkedTask),
+  const handleDeleteAllTasks = () => {
+    console.log(checkedTasks, "checkedTasks");
+    const arr = Array.from(checkedTasks);
+    console.log(arr, "arr");
+    tasks = arr.reduce(
+      (acc, checkedTask) => acc.filter((task) => task._id !== checkedTask),
       tasks
     );
-
-    this.setState({
-      ...this.state,
-      tasks,
-      checkedTasks: new Set(),
-      isOpenDeleteModal: false,
-    });
+    deleteTaskRequest(arr);
+    setTasks(tasks);
+    setCheckedTasks(new Set());
+    setIsOpenDeleteModal(false);
   };
-  handleCheckAllTasks = () => {
-    let { tasks, checkedTasks } = this.state;
+
+  const handleCheckAllTasks = () => {
     if (checkedTasks.size === tasks.length) {
       checkedTasks.clear();
     } else {
-      checkedTasks = tasks.map((item) => item.id);
+      checkedTasks = tasks.map((item) => item._id);
     }
-
-    this.setState({
-      ...this.state,
-      checkedTasks: new Set(checkedTasks),
-    });
+    setCheckedTasks(new Set(checkedTasks));
   };
 
-  handleOpenModal = (modalName) => {
-    this.setState({
-      ...this.state,
-      [modalName]: true,
-    });
+  const handleOpenModal = (modalName) => {
+    if (modalName === "isOpenAddModal") {
+      setIsOpenAddModal(true);
+    } else {
+      setIsOpenDeleteModal(true);
+    }
   };
-  onHide = (modalName) => {
-    this.setState({
-      ...this.state,
-      [modalName]: false,
-      checkedTasks: new Set(),
-    });
-  };
-
-  handleEditTask = (task) => {
-    this.setState({
-      ...this.state,
-      isOpenAddModal: true,
-      editTask: task,
-    });
+  const onHide = (modalName) => {
+    if (modalName === "isOpenAddModal") {
+      setIsOpenAddModal(false);
+    } else {
+      setIsOpenDeleteModal(false);
+    }
+    setCheckedTasks(new Set());
+    setEditTask({});
   };
 
-  resetEditTask = () => {
-    this.setState({
-      ...this.state,
-      editTask: {},
-    });
+  const handleEditTask = (task) => {
+    setEditTask(task);
+    setIsOpenAddModal(true);
   };
-  render() {
-    const { inputValue, tasks, checkedTasks, isOpenDeleteModal } = this.state;
-    return (
-      <div>
-        <h1
-          style={{
-            textAlign: "center",
-            color: "#392F5A",
-            marginBottom: "50px",
-          }}
-        >
-          Hi Need something ToDo?
-        </h1>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button onClick={() => this.handleOpenModal("isOpenAddModal")}>
-            Add Task
-          </Button>
-        </div>
-        {this.state.isOpenAddModal && (
-          <AddTask
-            onHide={this.onHide}
-            inputOnChange={this.inputOnChange}
-            submit={this.submit}
-            inputValue={inputValue}
-            isOpenAddModal={this.state.isOpenAddModal}
-            editTask={this.state.editTask}
-            resetEditTask={this.resetEditTask}
-          />
-        )}
-        <Deletemodal
-          isOpenDeleteModal={isOpenDeleteModal}
-          onHide={this.onHide}
-          handleDeleteAllTasks={this.handleDeleteAllTasks}
-          checkedTasks={this.state.checkedTasks}
-          tasks={this.state.tasks}
-        />
-        <div className={Styles.TasksContainer}>
-          {tasks.map((item, index) => {
-            return (
-              <Task
-                key={index}
-                task={item}
-                handleDeleteTask={this.handleDeleteTask}
-                handleOnChange={this.handleOnChange}
-                checkedTasks={checkedTasks}
-                handleEditTask={this.handleEditTask}
-              />
-            );
-          })}
-          {tasks.length === 0 && <p>There are not tasks!</p>}
-        </div>
-        {tasks.length === 0 || (
-          <div className={Styles.deleteAll}>
-            <button
-              onClick={() => this.handleOpenModal("isOpenDeleteModal")}
-              disabled={checkedTasks.size === 0}
-            >
-              Delete Cheked tasks
-            </button>
-            <button
-              onClick={this.handleCheckAllTasks}
-              style={{ background: "green" }}
-            >
-              {checkedTasks.size === tasks.length ? "Uncheck All" : "Check All"}
-            </button>
-          </div>
-        )}
+
+  const resetEditTask = () => {
+    setEditTask({});
+  };
+
+  useEffect(() => {
+    getTaskRequest(setTasks);
+  }, []);
+
+  return (
+    <div>
+      <h1
+        style={{ textAlign: "center", color: "#1282a2", marginBottom: "50px" }}
+      >
+        ToDo Project
+      </h1>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={() => handleOpenModal("isOpenAddModal")}>
+          Add Task
+        </Button>
       </div>
-    );
-  }
-}
+      {isOpenAddModal && (
+        <AddTask
+          onHide={onHide}
+          inputOnChange={inputOnChange}
+          submit={submit}
+          inputValue={inputValue}
+          isOpenAddModal={isOpenAddModal}
+          editableTask={editTask}
+          resetEditTask={resetEditTask}
+        />
+      )}
+      <DeleteModal
+        isOpenDeleteModal={isOpenDeleteModal}
+        onHide={onHide}
+        handleDeleteAllTasks={handleDeleteAllTasks}
+        checkedTasks={checkedTasks}
+        tasks={tasks}
+      />
+      <div className={Styles.TasksContainer}>
+        {tasks.map((item, index) => {
+          return (
+            <Task
+              tasks={tasks}
+              setTasks={setTasks}
+              key={index}
+              task={item}
+              handleDeleteTask={handleDeleteTask}
+              handleOnChange={handleOnChange}
+              checkedTasks={checkedTasks}
+              handleEditTask={handleEditTask}
+            />
+          );
+        })}
+        {tasks.length === 0 && <p>There are not tasks!</p>}
+      </div>
+      {tasks.length === 0 || (
+        <div className={Styles.deleteAll}>
+          <button
+            onClick={
+              checkedTasks.size > 0
+                ? () => handleOpenModal("isOpenDeleteModal")
+                : () => toast.error("No tasks selected!")
+            }
+          >
+            Delete Cheked tasks
+          </button>
+          <button onClick={handleCheckAllTasks} style={{ background: "green" }}>
+            {checkedTasks.size === tasks.length ? "Uncheck All" : "Check All"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default ToDo;
