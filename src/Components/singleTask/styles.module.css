@@ -2,13 +2,13 @@
   width: 400px;
   margin: auto;
   height: 400px;
-  background-color: #1282a2;
-  color: black;
+  background-color: var(--task_background);
+  color: var(--task_fotns);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px #034078 ridge;
+  border: 2px var(--task_border) ridge;
   border-radius: 50px;
 }
 .container p {
@@ -16,4 +16,7 @@
 }
 .container div {
   height: 100vh;
+}
+.container button{
+  color: var(--task_fotns);
 }

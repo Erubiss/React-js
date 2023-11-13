@@ -4,8 +4,7 @@ import Task from "./Task/Task";
 import DeleteModal from "./deleteModal/deleteModal";
 import Styles from "./styles.module.css";
 import Button from "react-bootstrap/Button";
-import {toast, } from "react-toastify";
-
+import { toast } from "react-toastify";
 
 import {
   createTaskRequest,
@@ -130,7 +129,7 @@ const ToDo = ({ addNotification }) => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center" , marginTop:"50px"}}>
+      <div className={Styles.addTask}>
         <Button onClick={() => handleOpenModal("isOpenAddModal")}>
           Add Task
         </Button>
@@ -171,8 +170,9 @@ const ToDo = ({ addNotification }) => {
         {tasks.length === 0 && <p>There are not tasks!</p>}
       </div>
       {tasks.length === 0 || (
-        <div className={Styles.deleteAll}>
+        <div className={Styles.checkButtons}>
           <button
+            className={Styles.deleteAll}
             onClick={
               checkedTasks.size > 0
                 ? () => handleOpenModal("isOpenDeleteModal")
@@ -181,7 +181,7 @@ const ToDo = ({ addNotification }) => {
           >
             Delete Cheked tasks
           </button>
-          <button onClick={handleCheckAllTasks} style={{ background: "green" }}>
+          <button onClick={handleCheckAllTasks} className={Styles.checkAll}>
             {checkedTasks.size === tasks.length ? "Uncheck All" : "Check All"}
           </button>
         </div>

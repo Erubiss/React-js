@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -53,17 +53,21 @@ const AddTask = ({
               as="textarea"
               rows={3}
               name="description"
+              placeholder="Discription"
               onChange={isAddState ? inputOnChange : editInputChange}
             />
           </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => onHide("isOpenAddModal")}>
+        <Button
+          variant="outline-secondary"
+          onClick={() => onHide("isOpenAddModal")}
+        >
           Close
         </Button>
         <Button
-          variant="primary"
+          variant="outline-primary"
           onClick={() => submit(!isAddState ? editTask : undefined)}
         >
           {isAddState ? "Add Task" : "Edit Task"}

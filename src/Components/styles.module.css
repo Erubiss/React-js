@@ -5,18 +5,40 @@
   flex-wrap: wrap;
   gap: 10px;
 }
+.addTask {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.addTask button{
+  color: var(--task_fotns);
+}
 
-.deleteAll {
+.checkButtons {
   display: flex;
   justify-content: center;
   margin-top: 75px;
 }
-.deleteAll button {
+.deleteAll {
   width: 180px;
   height: 40px;
-  background-color: red;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: var(--task_fotns);
   border-radius: 5px;
   margin-right: 15px;
+}
+.deleteAll:hover {
+  background-color: #BB342F;
+}
+
+.checkAll {
+  width: 180px;
+  height: 40px;
+  background-color: transparent;
+  color: var(--task_fotns);
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.checkAll:hover {
+  background-color: green;
 }

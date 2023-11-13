@@ -2,6 +2,10 @@
   --body_background: #2a3035;
   --task_background: #1282a2;
   --task_border: #034078;
+  --task_fotns: white
+}
+body label{
+  color: var(--task_fotns);
 }
 body {
   background-color: var(--body_background);

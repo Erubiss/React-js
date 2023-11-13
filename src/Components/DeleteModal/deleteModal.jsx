@@ -24,10 +24,10 @@ function Deletemodal({
           : ` ${checkedTasks.size} tasks ?`}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => onHide("isOpenDeleteModal")}>
+        <Button variant="outline-secondary" onClick={() => onHide("isOpenDeleteModal")}>
           Close
         </Button>
-        <Button variant="danger" onClick={handleDeleteAllTasks}>
+        <Button variant="outline-danger" onClick={handleDeleteAllTasks}>
           Delete
         </Button>
       </Modal.Footer>
