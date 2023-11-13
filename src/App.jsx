@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import { ToastContainer, toast,} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Routes } from "react-router-dom";
+
 export const ContextProvider = createContext();
 
 const App = () => {

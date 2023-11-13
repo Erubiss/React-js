@@ -3,6 +3,7 @@ import deleteIcon from "../../icons/delete.svg";
 import editIcon from "../../icons/edit.svg";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import "../../index.css";
 
 const Task = (props) => {
   const {
@@ -13,17 +14,19 @@ const Task = (props) => {
     handleEditTask,
     setTasks,
     tasks,
-    isDarkMode,
   } = props;
 
   return (
-    <div className={`${Styles.task} ${isDarkMode ? Styles.dark : Styles.light}`}>
+    <div className={Styles.task}>
       <div>
-        <input
-          type="checkbox"
-          onChange={() => handleOnChange(task._id)}
-          checked={checkedTasks.has(task._id)}
-        />
+        <Form>
+          <Form.Check
+            type="checkbox"
+            onChange={() => handleOnChange(task._id)}
+            checked={checkedTasks.has(task._id)}
+            style={{ margin: "8px" }}
+          />
+        </Form>
         <Link to={`/singleTask/${task._id}`} state={task}>
           <p>Title: {task.title}</p>
         </Link>
@@ -52,15 +55,18 @@ const Task = (props) => {
           style={{ marginLeft: "30%" }}
           label={task.status === "done" ? "Done" : "Active"}
           onChange={async (e) => {
-            const response = await fetch(`http://localhost:3001/task/${task._id}`, {
-              method: "PUT",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify({
-                status: e.target.checked ? "done" : "active",
-              }),
-            });
+            const response = await fetch(
+              `http://localhost:3001/task/${task._id}`,
+              {
+                method: "PUT",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  status: e.target.checked ? "done" : "active",
+                }),
+              }
+            );
             const data = await response.json();
             const newTasks = tasks.map((item) => {
               if (item._id === task._id) {

@@ -6,6 +6,7 @@ import Styles from "./styles.module.css";
 import Button from "react-bootstrap/Button";
 import {toast, } from "react-toastify";
 
+
 import {
   createTaskRequest,
   getTaskRequest,
@@ -129,12 +130,7 @@ const ToDo = ({ addNotification }) => {
 
   return (
     <div>
-      <h1
-        style={{ textAlign: "center", color: "#1282a2", marginBottom: "50px" }}
-      >
-        ToDo Project
-      </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center" , marginTop:"50px"}}>
         <Button onClick={() => handleOpenModal("isOpenAddModal")}>
           Add Task
         </Button>

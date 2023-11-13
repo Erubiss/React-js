@@ -1,10 +1,11 @@
+
 .task {
   display: flex;
   flex-direction: column;
   width: 250px;
   height: 311px;
-  background-color: #1282a2;
-  border: 2px #034078 ridge;
+  background-color: var(--task_background);
+  border: 2px var(--task_border) ridge;
   border-radius: 20px;
 }
 .task input {
