@@ -4,7 +4,10 @@ import Task from "./Task/Task";
 import DeleteModal from "./deleteModal/deleteModal";
 import Styles from "./styles.module.css";
 import Button from "react-bootstrap/Button";
+import Filter from "./Filter/Filter";
 import { toast } from "react-toastify";
+import { ContextProvider } from "../App";
+import { useContext } from "react";
 
 import {
   createTaskRequest,
@@ -13,6 +16,7 @@ import {
 } from "../service/requests";
 
 const ToDo = ({ addNotification }) => {
+  const { isDarkMode } = useContext(ContextProvider);
   let [tasks, setTasks] = useState([]);
   let [inputValue, setInputValue] = useState({});
   let [checkedTasks, setCheckedTasks] = useState(new Set());
@@ -134,6 +138,11 @@ const ToDo = ({ addNotification }) => {
           Add Task
         </Button>
       </div>
+      <Filter
+        tasks={tasks}
+        setTasks={setTasks}
+        getTaskRequest={getTaskRequest}
+      />
       {isOpenAddModal && (
         <AddTask
           onHide={onHide}
@@ -167,12 +176,13 @@ const ToDo = ({ addNotification }) => {
             />
           );
         })}
-        {tasks.length === 0 && <p>There are not tasks!</p>}
+        {tasks.length === 0 && <p style={{fontSize:"35px", color:"#0b5ed7"}}> There are not tasks!</p>}
       </div>
       {tasks.length === 0 || (
         <div className={Styles.checkButtons}>
           <button
             className={Styles.deleteAll}
+            style={{ color: isDarkMode ? "white" : "black" }}
             onClick={
               checkedTasks.size > 0
                 ? () => handleOpenModal("isOpenDeleteModal")
@@ -181,7 +191,11 @@ const ToDo = ({ addNotification }) => {
           >
             Delete Cheked tasks
           </button>
-          <button onClick={handleCheckAllTasks} className={Styles.checkAll}>
+          <button
+            onClick={handleCheckAllTasks}
+            className={Styles.checkAll}
+            style={{ color: isDarkMode ? "white" : "black" }}
+          >
             {checkedTasks.size === tasks.length ? "Uncheck All" : "Check All"}
           </button>
         </div>

@@ -3,8 +3,6 @@
   flex-direction: column;
   width: 250px;
   height: 311px;
-  background-color: var(--task_background);
-  border: 2px var(--task_border) ridge;
   border-radius: 20px;
 }
 .task input {
@@ -15,9 +13,14 @@
 .task p {
   text-align: center;
   font-size: 20px;
-  color: var(--task_fotns);
 }
 
+.formDark label{
+color:white;
+}
+.formLight label{
+  color: black;
+}
 .iconsContainer {
   display: flex;
   justify-content: center;

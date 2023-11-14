@@ -1,7 +1,12 @@
-.navbar span {
-  text-decoration: none;
-}
-
 .navbar a {
   text-decoration: none;
+}
+.navLink {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar{
+  justify-content: space-around;
 }

@@ -4,6 +4,8 @@ import editIcon from "../../icons/edit.svg";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import "../../index.css";
+import { ContextProvider } from "../../App";
+import { useContext } from "react";
 
 const Task = (props) => {
   const {
@@ -15,9 +17,29 @@ const Task = (props) => {
     setTasks,
     tasks,
   } = props;
-
+  const { isDarkMode } = useContext(ContextProvider);
+  const dark = () => {
+    const isChecked = checkedTasks.has(task._id);
+  
+    if (isChecked && isDarkMode) {
+      return "#3a2973";
+    } else if (isChecked && !isDarkMode) {
+      return "#1282a2";
+    } else if (isDarkMode && !isChecked) {
+      return "#271c4d";
+    } else if (!isDarkMode && !isChecked) {
+      return "#1abfee";
+    }
+  };
   return (
-    <div className={Styles.task}>
+    <div
+      className={Styles.task}
+      style={{
+        background: dark(),
+        color: isDarkMode ? "white" : "black",
+        border: isDarkMode ? "2px #0D5C63 ridge" : "2px #034078 ridge",
+      }}
+    >
       <div>
         <Form>
           <Form.Check
@@ -27,10 +49,19 @@ const Task = (props) => {
             style={{ margin: "8px" }}
           />
         </Form>
-        <Link to={`/singleTask/${task._id}`} state={task}>
+        <Link
+          to={`/singleTask/${task._id}`}
+          state={task}
+          style={{ color: isDarkMode ? "white" : "black" }}
+        >
           <p>Title: {task.title}</p>
         </Link>
-        <p>Description: {task.description}</p>
+        <p>
+          Description:{" "}
+          {task.description.length > 10
+            ? task.description.slice(0, 9) + "..."
+            : task.description}
+        </p>
         <p>Date: {task.created_at.split("T", 1)[0]}</p>
       </div>
       <div className={Styles.iconsContainer}>
@@ -49,6 +80,7 @@ const Task = (props) => {
       </div>
       <Form>
         <Form.Check
+          className={isDarkMode ? Styles.formDark : Styles.formLight}
           checked={task.status === "done"}
           type="switch"
           id="custom-switch"
