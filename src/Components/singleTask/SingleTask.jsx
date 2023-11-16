@@ -1,15 +1,12 @@
 import Styles from "./styles.module.css";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-
 import { ContextProvider } from "../../App";
 import { useContext } from "react";
 
 const SingleTask = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { state } = useLocation();
-  const location = useLocation();
-  console.log(location, "location");
   return (
     <div
       style={{

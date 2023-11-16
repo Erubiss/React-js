@@ -4,6 +4,8 @@
   width: 250px;
   height: 311px;
   border-radius: 20px;
+  box-shadow: h-offset v-offset blur spread color;
+  box-shadow: 0 0 15px 0 #0b5ed7;
 }
 .task input {
   margin-left: 6px;
@@ -15,10 +17,10 @@
   font-size: 20px;
 }
 
-.formDark label{
-color:white;
+.formDark label {
+  color: white;
 }
-.formLight label{
+.formLight label {
   color: black;
 }
 .iconsContainer {

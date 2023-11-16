@@ -49,7 +49,7 @@ const NavbarComponent = ({setIsDarkMode,isDarkMode}) => {
             <Link to="/contact">
               <Navbar.Brand>Contact Us</Navbar.Brand>
             </Link>
-            <Link>
+            <Link to="/about">
               <Navbar.Brand>About Us</Navbar.Brand>
             </Link>
           </Nav>

@@ -37,7 +37,7 @@ const Task = (props) => {
       style={{
         background: dark(),
         color: isDarkMode ? "white" : "black",
-        border: isDarkMode ? "2px #0D5C63 ridge" : "2px #034078 ridge",
+        border: isDarkMode ? "2px #0D5C63 ridge" : "2px #1496bb ridge",
       }}
     >
       <div>

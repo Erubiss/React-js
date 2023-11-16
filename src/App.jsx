@@ -5,7 +5,8 @@ import Navbar from "./Components/Navbar/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Routes } from "react-router-dom";
-
+import ContactUs from "./Components/contactUs/ContactUs";
+import AboutUs from "./Components/aboutUs/AboutUs";
 export const ContextProvider = createContext();
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <>
       <Navbar setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} />
-      <div style={{background: isDarkMode ? "#2a3035" : "#EDEDF4"}}>
+      <div style={{ background: isDarkMode ? "#2a3035" : "#EDEDF4" }}>
         <div style={containerStyles}>
           <ContextProvider.Provider value={contextValue}>
             <Routes>
@@ -31,7 +32,8 @@ const App = () => {
                 element={<ToDo addNotification={addNotification} />}
               />
               <Route path="/singleTask/:id" element={<SingleTask />} />
-              <Route path="/contact" />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/about" element={<AboutUs />} />
             </Routes>
             <ToastContainer
               position="bottom-right"
