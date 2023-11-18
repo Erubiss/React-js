@@ -6,9 +6,6 @@ import Styles from "./styles.module.css";
 import Button from "react-bootstrap/Button";
 import Filter from "./Filter/Filter";
 import { toast } from "react-toastify";
-import { ContextProvider } from "../App";
-import { useContext } from "react";
-
 import {
   createTaskRequest,
   getTaskRequest,
@@ -16,7 +13,6 @@ import {
 } from "../service/requests";
 
 const ToDo = ({ addNotification }) => {
-  const { isDarkMode } = useContext(ContextProvider);
   let [tasks, setTasks] = useState([]);
   let [inputValue, setInputValue] = useState({});
   let [checkedTasks, setCheckedTasks] = useState(new Set());
@@ -133,16 +129,20 @@ const ToDo = ({ addNotification }) => {
 
   return (
     <div>
-      <div className={Styles.addTask}>
-        <Button onClick={() => handleOpenModal("isOpenAddModal")}>
+      <div className={Styles.taskManage}>
+        <Button
+          className={Styles.addTask}
+          onClick={() => handleOpenModal("isOpenAddModal")}
+        >
           Add Task
         </Button>
+        <Filter
+          className={Styles.filter}
+          tasks={tasks}
+          setTasks={setTasks}
+          getTaskRequest={getTaskRequest}
+        />
       </div>
-      <Filter
-        tasks={tasks}
-        setTasks={setTasks}
-        getTaskRequest={getTaskRequest}
-      />
       {isOpenAddModal && (
         <AddTask
           onHide={onHide}
@@ -176,13 +176,18 @@ const ToDo = ({ addNotification }) => {
             />
           );
         })}
-        {tasks.length === 0 && <p style={{fontSize:"35px", color:"#0b5ed7"}}> There are not tasks!</p>}
+        {tasks.length === 0 && (
+          <p style={{ fontSize: "35px", color: "#0b5ed7", padding: "200px" }}>
+            {" "}
+            There are not tasks!
+          </p>
+        )}
       </div>
       {tasks.length === 0 || (
         <div className={Styles.checkButtons}>
           <button
             className={Styles.deleteAll}
-            style={{ color: isDarkMode ? "white" : "black" }}
+            // style={{ color: isDarkMode ? "white" : "black" }}
             onClick={
               checkedTasks.size > 0
                 ? () => handleOpenModal("isOpenDeleteModal")
@@ -191,17 +196,23 @@ const ToDo = ({ addNotification }) => {
           >
             Delete Cheked tasks
           </button>
-          <button
-            onClick={handleCheckAllTasks}
-            className={Styles.checkAll}
-            style={{ color: isDarkMode ? "white" : "black" }}
-          >
+          <button onClick={handleCheckAllTasks} className={Styles.checkAll}>
             {checkedTasks.size === tasks.length ? "Uncheck All" : "Check All"}
           </button>
         </div>
       )}
+      <footer
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          color: "whitesmoke",
+        }}
+      >
+        Created by Erik Ayvazyan & Liana Davtyan ©
+      </footer>
     </div>
   );
 };
 
 export default ToDo;
+ 

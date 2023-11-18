@@ -1,4 +1,24 @@
-.contactus{
-    display: flex;
-    height: 100vh;
+.contactus {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  
+}
+.form [type=text]{
+margin-top: 15px;
+margin-bottom: 15px;
+}
+.form button{
+    margin: 50px;
+}
+h3,
+h4 {
+
+  color: white;
+  font-family: cursive;
+  font-style: oblique;
+  text-align: center;
+  padding-top: 50px;
+  font-size: 50px;
 }

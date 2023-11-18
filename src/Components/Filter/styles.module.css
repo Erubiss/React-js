@@ -1,8 +1,12 @@
 .search{
    display: flex; 
-   margin-top: 10px;
-   width: 50%
+  border-radius: 5px;
+  height: 55px;
+  padding: 5px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  transition: all .5s ease;
 }
 .search button{
-    margin: 5px;
-}
+    margin-left: 5px;
+height: 45px;}

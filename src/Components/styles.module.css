@@ -1,17 +1,10 @@
 .TasksContainer {
   margin-top: 50px;
+  height: 100vh;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
-}
-.addTask {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-.addTask button{
-  color: var(--task_fotns);
 }
 
 .checkButtons {
@@ -20,24 +13,38 @@
   margin-top: 75px;
 }
 .deleteAll {
-  width: 180px;
+  width: 200px;
   height: 40px;
   background-color: transparent;
   border-radius: 5px;
   margin-right: 15px;
+  color: white;
 }
 .deleteAll:hover {
-  background-color: #BB342F;
+  background-color: #bb342f;
 }
 
 .checkAll {
   width: 180px;
   height: 40px;
   background-color: transparent;
-  /* color: var(--task_fotns); */
   border-radius: 5px;
-  margin-right: 15px;
+  margin-right: 25px;
+  color: white;
 }
 .checkAll:hover {
   background-color: green;
+}
+
+.taskManage {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.addTask {
+  margin-top: 5px;
+  height: 45px;
+  display: flex;
 }

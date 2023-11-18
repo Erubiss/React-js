@@ -6,7 +6,9 @@
   border-radius: 20px;
   box-shadow: h-offset v-offset blur spread color;
   box-shadow: 0 0 15px 0 #0b5ed7;
+  margin: 20px;
 }
+
 .task input {
   margin-left: 6px;
   cursor: pointer;

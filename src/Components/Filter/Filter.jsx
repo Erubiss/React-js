@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import Styles from "../Filter/styles.module.css"
+import Styles from "../Filter/styles.module.css";
+import { toast } from "react-toastify";
 
 const Filter = ({ tasks, setTasks, getTaskRequest }) => {
-  const [searchData, setSearchData] = useState();
+  const [searchData, setSearchData] = useState("");
   const filterByTitle = () => {
-    console.log(searchData, "searchData");
     const filteredTasks = tasks.filter((task) => task.title === searchData);
-    console.log(filteredTasks, "filteredTasks");
-    setTasks(filteredTasks);
+    if (!searchData || filteredTasks.length === 0) {
+      toast.error("Can't search or see results");
+    } else {
+      setTasks(filteredTasks);
+      setSearchData("")
+    }
   };
   return (
     <div className={Styles.search}>
@@ -16,11 +20,8 @@ const Filter = ({ tasks, setTasks, getTaskRequest }) => {
         placeholder="Search ..."
         onChange={(e) => setSearchData(e.target.value)}
       />
-      <Button onClick={filterByTitle}>
-        Search
-      </Button>
+      <Button onClick={filterByTitle}>Search</Button>
       <Button onClick={() => getTaskRequest(setTasks)}>Reset</Button>
-
     </div>
   );
 };
