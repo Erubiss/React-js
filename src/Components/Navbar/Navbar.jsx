@@ -60,7 +60,7 @@ const NavbarComponent = ({ setIsDarkMode, isDarkMode }) => {
             <img
               src={search}
               alt="search"
-              style={{ width: "45px", height: "45px", cursor: "pointer" }}
+              style={{ width: "45px", height: "45px", cursor: "pointer",}}
               onClick={() => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
               }}

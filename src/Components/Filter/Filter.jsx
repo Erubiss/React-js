@@ -14,14 +14,19 @@ const Filter = ({ tasks, setTasks, getTaskRequest }) => {
       setSearchData("")
     }
   };
+  const reset=()=>{
+    getTaskRequest(setTasks)
+    setSearchData("")
+  }
   return (
     <div className={Styles.search}>
       <Form.Control
         placeholder="Search ..."
+        value={searchData}
         onChange={(e) => setSearchData(e.target.value)}
       />
       <Button onClick={filterByTitle}>Search</Button>
-      <Button onClick={() => getTaskRequest(setTasks)}>Reset</Button>
+      <Button onClick={reset }>Reset</Button>
     </div>
   );
 };

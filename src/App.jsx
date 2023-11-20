@@ -36,7 +36,7 @@ const App = () => {
     background: backimg(),
     backgroundAttachment: "scroll",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "100%",
+    backgroundSize: "100% 100%",
   };
 
   return (

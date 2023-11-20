@@ -177,7 +177,7 @@ const ToDo = ({ addNotification }) => {
           );
         })}
         {tasks.length === 0 && (
-          <p style={{ fontSize: "35px", color: "#0b5ed7", padding: "200px" }}>
+          <p style={{ fontSize: "35px", color: "#0b5ed7", padding: "150px" }}>
             {" "}
             There are not tasks!
           </p>

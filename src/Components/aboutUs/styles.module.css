@@ -1,3 +1,16 @@
-.aboutus{
-    height: 100vh;
+.cvs {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  height: 95vh;
+}
+
+.erikcv,
+.lianacv {
+  margin-top: 50px;
+  height: 600px;
+}
+
+.button {
+  margin-top: 80px;
 }

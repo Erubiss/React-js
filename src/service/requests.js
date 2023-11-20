@@ -16,7 +16,6 @@ export const createTaskRequest = async (task, addNotification) => {
     if (response.ok) {
       addNotification("Your task was successfuly added!", "success");
     }
-    // throw "Something qent wrong!";
     return newTask;
   } catch (error) {
     addNotification(error, "error");

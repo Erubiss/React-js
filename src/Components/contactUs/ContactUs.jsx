@@ -88,6 +88,15 @@ const ContactUs = () => {
           </Button>
         </Form>
       </div>
+      <footer
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          color: "whitesmoke",
+        }}
+      >
+        Created by Erik Ayvazyan & Liana Davtyan ©
+      </footer>
     </div>
   );
 };
